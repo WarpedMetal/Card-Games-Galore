@@ -1,3 +1,5 @@
+package cggmain;
+
 
 import java.util.*;
 
@@ -29,20 +31,31 @@ public class War extends Game {
     }
     
     void Gameplay(){
+        /**
+         * Runs the main loop of War
+         */
+        // create player and AI hands
         Hands person=new Hands();
         Hands AI=new Hands();
+        // create war card deck
         Game war=new Game();
         war.Game();
         war.Shuffle();
+        // deal deck to player and AI
         person.setHand(war.Deal(getHandSize()));
         AI.setHand(war.Deal(getHandSize()));
-        Scanner Scan = new Scanner(System.in);
+        // initialization values
+        Scanner scan = new Scanner(System.in);
         int personNum=0;
         int AINum=0;
+        // vector that will be used to store ties during the game
         Vector<Integer> ties=new Vector<Integer>();
+        // "While the player and the AI have cards in their hand, can play"
         while (!person.getHand().isEmpty() && !AI.getHand().isEmpty()){
+            // 2-line buffer for player to play their next card
             System.out.println("Enter p to play");
-            char play=Scan.next().charAt(0);
+            char play=scan.next().charAt(0);
+            // grab the player and AI's firstmost card value
             personNum=person.NumDefault();
             AINum=AI.NumDefault();
             System.out.print("You played: ");

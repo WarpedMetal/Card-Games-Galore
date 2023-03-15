@@ -1,3 +1,5 @@
+package cggmain;
+
 import java.util.*;
 
 
@@ -21,10 +23,32 @@ public class Game{
     }
     
     Vector<Integer> getDeck(){
+        /**
+         * Returns the deck object
+         */
         return deck;
     }
+    
+    boolean isDeckEmpty(){
+        /**
+         * Checks if the deck itself is out of cards
+         */
+        return deck.isEmpty();
+    }
+    
+    int getTopCard(){
+        /**
+         * Returns the value of the topmost card of the deck (pull from the top)
+         */
+       int val = deck.firstElement();
+       deck.removeElement(deck.firstElement());
+       return val; 
+    }
         
-    void Shuffle(){  //this will shuffle the deck at any deck size
+    void Shuffle(){
+        /**
+         * this will shuffle the deck at any deck size
+         */
         Vector<Integer> shuffledDeck=new Vector<Integer>(0); //new vector for the shuffled deck
         int randomNum=0; //integer to obtain a random number
         int tempsize=deck.size();
@@ -36,7 +60,10 @@ public class Game{
         deck=shuffledDeck;
     }
     
-    Vector<Integer> Deal(int handSize){ //this will deal the deck to one player for any hand size
+    Vector<Integer> Deal(int handSize){
+        /**
+         * this will deal the deck to one player for any hand size
+         */
         Vector<Integer> allHands=new Vector<Integer>();
         for (int x=0; x<handSize; x++){
             allHands.add(deck.elementAt(0)); 

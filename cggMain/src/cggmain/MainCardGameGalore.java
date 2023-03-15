@@ -1,3 +1,5 @@
+package cggmain;
+
 import java.util.*;
 
 public class MainCardGameGalore {
@@ -14,6 +16,7 @@ public class MainCardGameGalore {
         }
         else{
             GoFish selectedGame=new GoFish();
+            //selectedGame.Gameplay();
         }
         
     }
