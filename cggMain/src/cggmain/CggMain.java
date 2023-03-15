@@ -9,6 +9,8 @@ package cggmain;
  * @author bryce
  */
 public class CggMain {
+    
+    //Hello
 
     /**
      * @param args the command line arguments
