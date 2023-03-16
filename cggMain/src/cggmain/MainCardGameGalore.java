@@ -16,7 +16,7 @@ public class MainCardGameGalore {
         }
         else{
             GoFish selectedGame=new GoFish();
-            //selectedGame.Gameplay();
+            selectedGame.Gameplay();
         }
         
     }

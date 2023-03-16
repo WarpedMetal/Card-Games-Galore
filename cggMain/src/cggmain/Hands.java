@@ -19,24 +19,29 @@ public class Hands {
        hand.setSize(0);
    }
     
+   /**
+     * Returns the vector containing all cards (if any) in a hand object
+     */
     Vector<Integer> getHand(){
-        /**
-         * Returns the vector containing all cards (if any) in a hand object
-         */
         return hand;
     }
     
+    /**
+     * Sets a preexisting hand(vector) to a hand for use(vector)
+     * 
+     * @param newHand 
+     */
     void setHand(Vector<Integer> newHand){ 
-        /**
-         * Sets a preexisting hand(vector) to a hand for use(vector)
-         */
         hand=newHand;
     }
     
+    /**
+     * sort the players hand for them
+     * 
+     * @param oldHand
+     * @return 
+     */
     Vector<Integer> SortHand(Vector<Integer> oldHand){
-        /**
-         * sort the players hand for them
-         */
         Vector<Integer> sortedHand= new Vector<Integer>(); //A new vector used to sort the original hand
         int small=55; //integer used to keep track of smallest value in hand
         while (!oldHand.isEmpty()){ //stops when then hand is empty
@@ -50,33 +55,41 @@ public class Hands {
         return sortedHand;
     }
     
+    /**
+     * Returns the value of the first card in a hand
+     * 
+     * @return 
+     */
     int NumDefault(){
-        /**
-         * Returns the value of the first card in a hand
-         */
         int num=getHand().firstElement();
         while (num>=15) num-=13;
         return num;
     }
     
+    /**
+     * Adds a card to end of the deck
+     * 
+     * @param card 
+     */
     void AddCard(int card){ 
-        /**
-         * Adds a card to end of the deck
-         */
         hand.add(card);
     }
     
+    /**
+     * Will remove a card from deck
+     * 
+     * @param card 
+     */
     void RemoveCard(int card){ 
-        /**
-         * Will remove a card from deck
-         */
         hand.removeElement(card); //This removes the first occurent of card since no cards duplicate that is ok.
     }
     
+    /**
+     * return the size of the hand
+     * 
+     * @return 
+     */
     int getSize(){ 
-        /**
-         * return the size of the hand
-         */
         return hand.size();
     }
 }
