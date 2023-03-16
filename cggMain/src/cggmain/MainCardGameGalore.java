@@ -10,10 +10,12 @@ public class MainCardGameGalore {
         System.out.println("Please select War or GoFish (w/g)");
         Scanner Scan = new Scanner(System.in);
         char gameDecision=Scan.next().charAt(0);
+        // run War
         if (gameDecision == 'w'){
             War selectedGame=new War();
             selectedGame.Gameplay();
         }
+        // run Go Fish
         else{
             GoFish selectedGame=new GoFish();
             selectedGame.Gameplay();
