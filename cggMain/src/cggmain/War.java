@@ -46,6 +46,7 @@ public class War extends Game {
         AI.setHand(war.Deal(getHandSize()));
         // initialization values
         Scanner scan = new Scanner(System.in);
+        //These values are used to pull NumDefault for players hands to make it make more sense for me
         int personNum=0;
         int AINum=0;
         // vector that will be used to store ties during the game
@@ -54,35 +55,35 @@ public class War extends Game {
         while (!person.getHand().isEmpty() && !AI.getHand().isEmpty()){
             // 2-line buffer for player to play their next card
             System.out.println("Enter p to play");
-            char play=scan.next().charAt(0);
+            char play=scan.next().charAt(0); //This is solely so the program doesn't run to completion really fast
             // grab the player and AI's firstmost card value
             personNum=person.NumDefault();
             AINum=AI.NumDefault();
+            //Tell the player what cards were played
             System.out.print("You played: ");
             System.out.println(person.getHand().firstElement()+", "+personNum);
             System.out.print("The AI played: ");
             System.out.println(AI.getHand().firstElement()+", "+AINum);
-            Vector<Integer> temp=new Vector<Integer>();
-                if(personNum>AINum || (personNum == 2 && AINum == 14)){
-                    temp=person.getHand();
+                if(personNum>AINum){
+                    //This loop adds cards to their deck if they won after a War
                     for (int x=0; x<ties.size();x++){
-                        temp.add(ties.elementAt(x));
-                        if (ties.size()-1==x) person.setHand(temp);
+                        person.AddCard(ties.elementAt(x));
+                        if (x+1==ties.size()) ties.clear();
                     }
-                    ties.clear();
+                    //Add the first card from both players hands then remove them from the front of their hands
                     person.AddCard(AI.getHand().firstElement());
                     person.AddCard(person.getHand().firstElement());
                     person.RemoveCard(person.getHand().firstElement());
                     AI.RemoveCard(AI.getHand().firstElement());
                     System.out.println("You won that round!");
                 }
-                else if (personNum<AINum|| (personNum == 14 && AINum == 2)){
-                    temp=AI.getHand();
+                else if (personNum<AINum){
+                    //This loop adds cards to their deck if they won after a War
                     for (int x=0; x<ties.size();x++){
-                        temp.add(ties.elementAt(x));
-                        if (ties.size()-1==x) AI.setHand(temp);
+                        AI.AddCard(ties.elementAt(x));
+                        if (x+1==ties.size()) ties.clear();
                     }
-                    ties.clear();
+                    //Add the first card from both players hands then remove them from the front of their hands
                     AI.AddCard(person.getHand().firstElement());
                     AI.AddCard(AI.getHand().firstElement());
                     person.RemoveCard(person.getHand().firstElement());
@@ -90,12 +91,18 @@ public class War extends Game {
                     System.out.println("The AI won that round.");
                 }
                 else{
-                    System.out.println("Y'all tied this round!");
-                    ties.add(person.getHand().firstElement());
-                    ties.add(AI.getHand().firstElement());
-                    person.RemoveCard(person.getHand().firstElement());
-                    AI.RemoveCard(AI.getHand().firstElement());
+                    System.out.println("Y'all tied this round!\nThis means WAR!");
+                    //This loop adds all cards in a war into a vector for later use.
+                    for (int x=0; x<4; x++){
+                        ties.add(person.getHand().firstElement());
+                        ties.add(AI.getHand().firstElement());
+                        System.out.println(person.getHand().firstElement() + ", " + AI.getHand().firstElement());
+                        //This removes the cards used in a war from their hand
+                        person.RemoveCard(person.getHand().firstElement());
+                        AI.RemoveCard(AI.getHand().firstElement());
+                    }
                 }
+            System.out.println(person.getHand()+"\n"+AI.getHand());
         }
         if (AI.getHand().isEmpty()) System.out.println("Congratulations, You WON!");
         else System.out.println("Better Luck Next Time, The AI Beat You.");
