@@ -24,6 +24,7 @@ public class War extends Game {
     War(){
         handSize=26;
         playerCount=2;
+        Game();
     }
     
     int getHandSize(){

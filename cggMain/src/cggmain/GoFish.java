@@ -13,14 +13,17 @@ import java.util.*;
  */
 public class GoFish extends Game {
     
-    private final int handSize = 7;
-    private final int playerCount = 2;
+    private final int handSize;
+    private final int playerCount;
     public int playerBooks;
     public int AIBooks;
     
     GoFish(){
+        handSize=7;
+        playerCount=2;
         playerBooks=0;
         AIBooks=0;
+        Game();
     }    
     
     /**
@@ -116,6 +119,9 @@ public class GoFish extends Game {
             // player's turn
             cardIndices.clear();
             if(playerT == true){
+                if (player.getHand().isEmpty()){
+                    player.AddCard(gfDeck.takeTopCard());
+                }
                 Vector<Integer> cleanHand = new Vector<>();
                 cleanHand.addAll(player.getHand());
                 System.out.print("Your hand is: ");
@@ -169,6 +175,9 @@ public class GoFish extends Game {
             }
             // CPU's turn
             else{
+                if (AI.getHand().isEmpty()){
+                    AI.AddCard(gfDeck.takeTopCard());
+                }
                 Random randGen = new Random();
                 // choose a card from the CPU's hand
                 int randNum = randGen.nextInt(AI.getSize());

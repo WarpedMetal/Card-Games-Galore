@@ -4,6 +4,9 @@
  */
 package cggmain;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.JFrame;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -234,7 +237,8 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
          if (jComboBox2.getSelectedItem() == "War"){
             War warStats=new War();
-            if (warStats.getStats().equals("")) {   //To check if they have played before
+            String homeDirectory = System.getProperty("user.home");  //setting homedirectory
+            if (!Files.exists(Paths.get(homeDirectory+"\\\\CardGamesGalore\\WarStats.txt"))) {   //To check if they have played before
                 showMessageDialog(null,"You have not played War yet!");
             } 
             else {
@@ -244,7 +248,8 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         }
         else if (jComboBox2.getSelectedItem() == "Go Fish"){
             GoFish goFishStats=new GoFish();
-            if (goFishStats.getStats().equals("")) {   //To check if they have played before
+            String homeDirectory = System.getProperty("user.home");  //setting homedirectory
+            if (!Files.exists(Paths.get(homeDirectory+"\\\\CardGamesGalore\\GoFishStats.txt"))) {   //To check if they have played before
                 showMessageDialog(null,"You have not played Go Fish yet!");
             } 
             else {
