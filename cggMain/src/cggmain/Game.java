@@ -1,5 +1,9 @@
 package cggmain;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -15,11 +19,15 @@ import java.util.*;
 public class Game{
     
     private Vector<Integer> deck=new Vector<Integer>();   //deck of 52 cards (vector for easy removal of cards from deck)
+    private String rules;   //A preditemined String that will show the player the rules;
+    private String stats;   //A String that will save the stats of a Game and show them to the screen
     
     void Game(){ 
         for (int x=2; x<54;x++){    //these cards are labeled from 2-54 Where Jack = 11, Queen = 12, King = 13, Ace= 14. You can subtract 13 to get other card in other suit
             deck.add(x);                //suits will go clubs,spades,diamonds,hearts
         }
+        rules="";
+        stats="";
     }
     
     /**
@@ -81,4 +89,77 @@ public class Game{
         return allHands;
     }
     
+    void setRules(String specificRules){
+        rules=specificRules;
+    }
+    
+    String getRules(){
+        return rules;
+    }
+    
+    void setStats(String specificStats){
+        stats=specificStats;
+    }
+    
+    String getStats(){
+        return stats;
+    }
+    
+    /*
+    Games Won: 
+    Games Lost: 
+    Games Played: 
+    Win Precentage: 
+    */
+    
+    void saveStats(String gamePath, int wol){
+        int won=0;
+        int lost=0;  //some variables to help edit the stats
+        int played=0;
+        String homeDirectory = System.getProperty("user.home");  //setting homedirectory
+        String fullDirSpec = homeDirectory + "\\CardGamesGalore\\"+gamePath+".txt";  //creating a file path in a string
+        Path path = Paths.get(fullDirSpec); //setting the string to a path
+        try {
+            Files.createDirectories(path.getParent()); //creates any directories needed
+            if (!Files.exists(path)) Files.createFile(path);  //creating the file itself
+            readStats(gamePath); //This will set stats to whatever is in the file
+            if (stats.equals("")){  //When empty set equal to this
+                stats="Games Won: 0\n" +
+                    "Games Lost: 0\n" +
+                    "Games Played: 0\n" +
+                    "Win Precentage: 0.0%";
+            }
+            String temp=stats.replaceAll("\\D+"," "); //Replacing everything that isn't an int with a space
+            temp=temp.trim();  
+            int index;
+            index=temp.indexOf(" ");
+            won=Integer.parseInt(temp.substring(0,index)); //Setting won to the value for games won
+            int tempIndex=temp.indexOf(" ",index+1);
+            lost=Integer.parseInt(temp.substring(index+1,tempIndex)); //Setting loss to the values for games lost
+            played=won+lost;
+            won+=wol; //Adding 1 to won if you won
+            if (wol== 0)lost+=1; //Adding 1 to loss if you lost
+            played=won+lost;
+            float precentage=(float)won/played*100;  //calculating the win precentage
+            stats="Games Won: "+won+"\n" +
+                    "Games Lost: "+lost+"\n" +
+                    "Games Played: "+played+"\n" +
+                    "Win Precentage: "+precentage+"%";
+           
+            Files.writeString(path,stats); //writes to the file   Add string for Stats
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    void readStats(String gamePath){
+        String homeDirectory = System.getProperty("user.home");  //setting homedirectory
+        String fullDirSpec = homeDirectory + "\\CardGamesGalore\\"+gamePath+".txt";  //creating a file path in a string
+        Path path = Paths.get(fullDirSpec); //setting the string to a path
+        try{
+            stats = Files.readString(path); //setting the file contents = to a string
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

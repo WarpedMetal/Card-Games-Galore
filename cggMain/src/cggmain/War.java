@@ -1,6 +1,10 @@
 package cggmain;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /*
@@ -56,6 +60,7 @@ public class War extends Game {
             // 2-line buffer for player to play their next card
             System.out.println("Enter p to play");
             char play=scan.next().charAt(0); //This is solely so the program doesn't run to completion really fast
+            if (play == 'q') break;
             // grab the player and AI's firstmost card value
             personNum=person.NumDefault();
             AINum=AI.NumDefault();
@@ -94,6 +99,8 @@ public class War extends Game {
                     System.out.println("Y'all tied this round!\nThis means WAR!");
                     //This loop adds all cards in a war into a vector for later use.
                     for (int x=0; x<4; x++){
+                        if(person.getHand().isEmpty()) break;
+                        if(AI.getHand().isEmpty()) break;
                         ties.add(person.getHand().firstElement());
                         ties.add(AI.getHand().firstElement());
                         System.out.println(person.getHand().firstElement() + ", " + AI.getHand().firstElement());
@@ -104,7 +111,14 @@ public class War extends Game {
                 }
             System.out.println(person.getHand()+"\n"+AI.getHand());
         }
-        if (AI.getHand().isEmpty()) System.out.println("Congratulations, You WON!");
-        else System.out.println("Better Luck Next Time, The AI Beat You.");
+        int wol=0; //value for win or lost
+        if (AI.getHand().isEmpty()){
+            System.out.println("Congratulations, You WON!");
+            wol=1;
+        }
+        else {
+            System.out.println("Better Luck Next Time, The AI Beat You.");
+        }
+        saveStats("WarStats",wol); //Saving their stats
     }
 }

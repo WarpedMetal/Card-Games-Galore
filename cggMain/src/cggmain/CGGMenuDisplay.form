@@ -90,6 +90,8 @@
                               <Component id="jButtonPlay" min="-2" max="-2" attributes="0"/>
                               <Component id="jButtonQuit" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                          <Component id="jButtonRules" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="309" max="-2" attributes="0"/>
@@ -124,7 +126,10 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButtonPlay" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jButtonQuit" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonQuit" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonRules" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="jButtonHighScore" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -196,6 +201,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="HIGH SCORES"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonHighScoreActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonQuit">
           <Properties>
@@ -217,6 +225,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value=" image here maybe? something like falling cards?"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonRules">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Rules"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRulesActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

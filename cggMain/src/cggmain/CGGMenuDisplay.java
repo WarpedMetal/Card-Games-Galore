@@ -5,6 +5,7 @@
 package cggmain;
 
 import javax.swing.JFrame;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -38,6 +39,7 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         jButtonQuit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jButtonRules = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Card Games Galore - Main Menu");
@@ -76,6 +78,11 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
 
         jButtonHighScore.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jButtonHighScore.setText("HIGH SCORES");
+        jButtonHighScore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHighScoreActionPerformed(evt);
+            }
+        });
 
         jButtonQuit.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jButtonQuit.setText("QUIT");
@@ -88,6 +95,13 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         jLabel1.setText("image here maybe?");
 
         jLabel2.setText(" image here maybe? something like falling cards?");
+
+        jButtonRules.setText("Rules");
+        jButtonRules.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRulesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,7 +130,9 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
                         .addGap(342, 342, 342)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButtonPlay)
-                            .addComponent(jButtonQuit)))
+                            .addComponent(jButtonQuit))
+                        .addGap(42, 42, 42)
+                        .addComponent(jButtonRules))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(309, 309, 309)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -143,7 +159,9 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButtonPlay)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonQuit)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonQuit)
+                    .addComponent(jButtonRules))
                 .addGap(18, 18, 18)
                 .addComponent(jButtonHighScore)
                 .addGap(20, 20, 20))
@@ -180,6 +198,61 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFrame warFrame = new JFrame("War");
     }//GEN-LAST:event_jButtonPlayMouseClicked
+
+    private void jButtonRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRulesActionPerformed
+        // TODO add your handling code here:
+        if (jComboBox2.getSelectedItem() == "War"){
+            War warRules=new War();
+            warRules.setRules("War is a pretty basic game, where 2 players are playing against each other. \n"  //The rules for War
+                + "Each player gets half of the deck but can not look at them. They then play \n"
+                + "one card at a time and whoever had the higher card (Ace high) wins the cards \n"
+                + "The winnner then puts those cards on the bottom of their deck and play continues \n"
+                + "until only one player has any cards. The only exception to this is if the players \n"
+                + "tie. In which they then lay down their top 3 cards face down and play one final \n"
+                + "card face up. Whoever wins that hand wins every card that was played. The face \n"
+                + "down and face up cards. Whoever gets the whole deck first wins.");
+            showMessageDialog(null,warRules.getRules());
+        }
+        else if (jComboBox2.getSelectedItem() == "Go Fish"){
+            GoFish goFishRules=new GoFish();
+            goFishRules.setRules("Go Fish is a game that is played between 2 people. The start \n"    //The rules fo Go Fish
+                    + "of the game involves both players getting dealt a hand of 7 cards. \n"
+                    + "The objective of the game is to get the most 4 of a kinds (4 cards \n"
+                    + "of the same variety). On your turn you will pick a card that you would \n"
+                    + "like to steal from your opponent. Whatever card you pick you will then \n"
+                    + "steal all of the same cards that they have. For example, if you pick 10 \n"
+                    + "and they have 2 10s you will steal both of their 10s. You continue playing\n"
+                    + "until you fail to steal a card from them. Then, you draw one card from the \n"
+                    + "deck. When you get a 4 of a kind you set it down and continue playing \n"
+                    + "until all the cards are used up. At the end whoever has the most 4 of a \n"
+                    + "kinds wins.\n");
+            showMessageDialog(null,goFishRules.getRules());
+        }
+    }//GEN-LAST:event_jButtonRulesActionPerformed
+
+    private void jButtonHighScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHighScoreActionPerformed
+        // TODO add your handling code here:
+         if (jComboBox2.getSelectedItem() == "War"){
+            War warStats=new War();
+            if (warStats.getStats().equals("")) {   //To check if they have played before
+                showMessageDialog(null,"You have not played War yet!");
+            } 
+            else {
+                warStats.readStats("WarStats");
+                showMessageDialog(null,warStats.getStats());  //Showing stats to screen
+            }
+        }
+        else if (jComboBox2.getSelectedItem() == "Go Fish"){
+            GoFish goFishStats=new GoFish();
+            if (goFishStats.getStats().equals("")) {   //To check if they have played before
+                showMessageDialog(null,"You have not played Go Fish yet!");
+            } 
+            else {
+                goFishStats.readStats("GoFishStats");
+                showMessageDialog(null,goFishStats.getStats());   //Showing stats to screen
+            }
+        }
+    }//GEN-LAST:event_jButtonHighScoreActionPerformed
 
     
     
@@ -223,6 +296,7 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
     private javax.swing.JButton jButtonHighScore;
     private javax.swing.JButton jButtonPlay;
     private javax.swing.JButton jButtonQuit;
+    private javax.swing.JButton jButtonRules;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -216,10 +216,12 @@ public class GoFish extends Game {
         if(playerBooks > AIBooks){
             System.out.println("You won!");
             System.out.println("You had " + playerBooks + " books whereas the CPU had " + AIBooks + " Books.");
+            saveStats("GoFishStats",1);  //save their stats 1 for win
         }
         else {
             System.out.println("The CPU has beat you.");
             System.out.println("You had " + playerBooks + " books whereas the CPU had " + AIBooks + " Books.");
+            saveStats("GoFishStats",0);   //save their stats 0 for loss
         }
     }
 }
