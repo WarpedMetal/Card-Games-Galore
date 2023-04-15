@@ -61,7 +61,7 @@ public class War extends Game {
             // 2-line buffer for player to play their next card
             System.out.println("Enter p to play");
             char play=scan.next().charAt(0); //This is solely so the program doesn't run to completion really fast
-            if (play == 'q') break;
+            if (play == 'q') break; 
             // grab the player and AI's firstmost card value
             personNum=person.NumDefault();
             AINum=AI.NumDefault();
