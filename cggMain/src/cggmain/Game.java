@@ -14,7 +14,7 @@ import java.util.*;
 
 /**
  *
- * @author chris/bryce
+ * @author chris/bryce/jordan
  */
 public class Game{
     
