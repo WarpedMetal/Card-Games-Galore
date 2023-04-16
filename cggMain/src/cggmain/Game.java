@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 /**
  *
  * @author chris/bryce/jordan
+ * hi everyone :D
  */
 public class Game{
     
