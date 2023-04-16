@@ -5,9 +5,7 @@
 package cggmain;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import javax.swing.JFrame;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -191,11 +189,9 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
     private void jButtonPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonPlayMouseClicked
         // TODO add your handling code here:
         if (jComboBox2.getSelectedItem() == "War"){
-             WarDisplay newWarGame = new WarDisplay();
-             newWarGame.setVisible(true);
-             
+            WarDisplay newWarGame=new WarDisplay();
+            newWarGame.setVisible(true);
         }
-       
     }//GEN-LAST:event_jButtonPlayMouseClicked
 
     private void jButtonRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRulesActionPerformed

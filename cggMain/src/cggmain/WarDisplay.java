@@ -5,7 +5,7 @@
 package cggmain;
 
 import static cggmain.Game.faceCardImage;
-import javax.swing.ImageIcon;
+
 
 /**
  *
@@ -13,18 +13,18 @@ import javax.swing.ImageIcon;
  */
 public class WarDisplay extends javax.swing.JFrame {
 
+    private War warGame;
+    private boolean GameOccuring;
+    
     /**
      * Creates new form WarDisplay
      */
     public WarDisplay() {
         initComponents();
         AIFaceCard.setVisible(false);
-        //PlayerFaceCard.setVisible(false);
-
-    
-       
-        
-        
+        PlayerFaceCard.setVisible(false);
+        warGame=new War();
+        GameOccuring=true;
     }
 
     /**
@@ -113,23 +113,29 @@ public class WarDisplay extends javax.swing.JFrame {
 
     private void PlayerDeckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlayerDeckMouseClicked
         // TODO add your handling code here:
-        System.out.print("Player deck clicked.");
-        // Make a new instance of war
-        War warGame = new War();
-        // Call the gameplay method for the new instance of war
-        warGame.Gameplay();
-        //
-        PlayerFaceCard.setIcon(faceCardImage[5]);
-        PlayerFaceCard.setLabelFor(PlayerFaceCard);
-        PlayerFaceCard.setVisible(true);
-        
+        System.out.println("Player deck clicked.");
+        if (GameOccuring){
+            int playerCard=warGame.getPlayerCard();
+            int AICard=warGame.getAICard();
+            warGame.Gameplay();
+            GameOccuring=warGame.getGamePlaying();
+            PlayerFaceCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+playerCard+".png")));
+            PlayerFaceCard.setVisible(true);
+            //PlayerFaceCard.setLabelFor(PlayerFaceCard);
+            //PlayerFaceCard.setVisible(true);
+            AIFaceCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+AICard+".png")));
+            AIFaceCard.setVisible(true);
+        }
+        else{
+            //return them to the main menu after telling them that they won or lost
+        }
         // if the user leaves, dispose of the frame containing the war game
         setDefaultCloseOperation(WarDisplay.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_PlayerDeckMouseClicked
 
     private void PlayerFaceCardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlayerFaceCardMouseClicked
         // TODO add your handling code here:
-        System.out.print("Player face card clicked");
+        System.out.println("Player face card clicked");
   
         
     }//GEN-LAST:event_PlayerFaceCardMouseClicked
