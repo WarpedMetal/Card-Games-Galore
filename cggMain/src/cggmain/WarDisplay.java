@@ -4,6 +4,9 @@
  */
 package cggmain;
 
+import static cggmain.Game.faceCardImage;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author jdohe
@@ -15,6 +18,13 @@ public class WarDisplay extends javax.swing.JFrame {
      */
     public WarDisplay() {
         initComponents();
+        AIFaceCard.setVisible(false);
+        //PlayerFaceCard.setVisible(false);
+
+    
+       
+        
+        
     }
 
     /**
@@ -29,6 +39,8 @@ public class WarDisplay extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         AIDeck = new javax.swing.JLabel();
         PlayerDeck = new javax.swing.JLabel();
+        PlayerFaceCard = new javax.swing.JLabel();
+        AIFaceCard = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,25 +57,44 @@ public class WarDisplay extends javax.swing.JFrame {
             }
         });
 
+        PlayerFaceCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/10.png"))); // NOI18N
+        PlayerFaceCard.setText("Didn't Work");
+        PlayerFaceCard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PlayerFaceCardMouseClicked(evt);
+            }
+        });
+
+        AIFaceCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageResources/Card Games Galore Resources/CardBackResize25.png"))); // NOI18N
+        AIFaceCard.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(358, 358, 358)
+                .addGap(247, 247, 247)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(AIDeck, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PlayerDeck, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(366, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PlayerFaceCard, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AIFaceCard, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(286, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(AIDeck)
-                .addGap(36, 36, 36)
-                .addComponent(PlayerDeck)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGap(67, 67, 67)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AIDeck)
+                    .addComponent(AIFaceCard))
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PlayerDeck)
+                    .addComponent(PlayerFaceCard))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -87,7 +118,21 @@ public class WarDisplay extends javax.swing.JFrame {
         War warGame = new War();
         // Call the gameplay method for the new instance of war
         warGame.Gameplay();
+        //
+        PlayerFaceCard.setIcon(faceCardImage[5]);
+        PlayerFaceCard.setLabelFor(PlayerFaceCard);
+        PlayerFaceCard.setVisible(true);
+        
+        // if the user leaves, dispose of the frame containing the war game
+        setDefaultCloseOperation(WarDisplay.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_PlayerDeckMouseClicked
+
+    private void PlayerFaceCardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlayerFaceCardMouseClicked
+        // TODO add your handling code here:
+        System.out.print("Player face card clicked");
+  
+        
+    }//GEN-LAST:event_PlayerFaceCardMouseClicked
 
     /**
      * @param args the command line arguments
@@ -126,7 +171,9 @@ public class WarDisplay extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AIDeck;
+    private javax.swing.JLabel AIFaceCard;
     private javax.swing.JLabel PlayerDeck;
+    private javax.swing.JLabel PlayerFaceCard;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

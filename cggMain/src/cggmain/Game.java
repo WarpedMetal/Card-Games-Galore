@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import javax.swing.ImageIcon;
 
 
 /*
@@ -21,6 +22,7 @@ public class Game{
     private Vector<Integer> deck=new Vector<Integer>();   //deck of 52 cards (vector for easy removal of cards from deck)
     private String rules;   //A preditemined String that will show the player the rules;
     private String stats;   //A String that will save the stats of a Game and show them to the screen
+    public static ImageIcon[] faceCardImage = new ImageIcon[54];
     
     void Game(){ 
         for (int x=2; x<54;x++){    //these cards are labeled from 2-54 Where Jack = 11, Queen = 12, King = 13, Ace= 14. You can subtract 13 to get other card in other suit
@@ -28,6 +30,9 @@ public class Game{
         }
         rules="";
         stats="";
+        for (int i = 2; i < faceCardImage.length; i++){
+            faceCardImage[i] = new ImageIcon((i+1)+".png");
+        }
     }
     
     /**
