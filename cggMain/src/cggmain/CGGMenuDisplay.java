@@ -6,7 +6,9 @@ package cggmain;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import javax.swing.JFrame;
 import static javax.swing.JOptionPane.showMessageDialog;
+
 
 /**
  *
@@ -19,7 +21,16 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
      */
     public CGGMenuDisplay() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setSize(800, 700);
     }
+    
+
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,22 +116,18 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(315, 315, 315)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(244, 244, 244)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButtonQuit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButtonRules)
+                                .addGap(61, 61, 61)
                                 .addComponent(jButtonHighScore))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonPlay)
-                                .addGap(102, 102, 102)
-                                .addComponent(jButtonRules))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonQuit))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(jLabelMenuTitle))
@@ -131,7 +138,10 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
                         .addGap(208, 208, 208)
                         .addComponent(jLabelMenuDescribe))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(269, 269, 269)
+                        .addGap(315, 315, 315)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(268, 268, 268)
                         .addComponent(jLabel1)))
                 .addContainerGap(128, Short.MAX_VALUE))
         );
@@ -144,19 +154,19 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(jLabelMenuDescribe)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(45, 45, 45)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonPlay)
-                    .addComponent(jButtonRules))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonQuit)
-                    .addComponent(jButtonHighScore))
-                .addGap(155, 155, 155))
+                    .addComponent(jButtonPlay))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonHighScore)
+                    .addComponent(jButtonRules))
+                .addGap(115, 115, 115))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -191,7 +201,13 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         if (jComboBox2.getSelectedItem() == "War"){
             WarDisplay newWarGame=new WarDisplay();
             newWarGame.setVisible(true);
-        }
+            this.setVisible(false);}
+        if (jComboBox2.getSelectedItem() == "Go Fish"){
+            System.out.print("Go Fish?");
+            GoFishDisplay newGoFishGame=new GoFishDisplay();
+            newGoFishGame.setVisible(true);
+            this.setVisible(false);
+      }
     }//GEN-LAST:event_jButtonPlayMouseClicked
 
     private void jButtonRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRulesActionPerformed
