@@ -184,10 +184,11 @@ public class GoFish extends Game {
                 int chosen = person.getHand().elementAt(choice);
                 while (chosen > 14) {chosen -= 13;}
                 System.out.println("you chose card value: " + String.valueOf(chosen));
-                if(temp.contains(person.getHand().elementAt(choice))){
+                if(temp.contains(chosen)){
+                    System.out.println("Works");
                     // if so, see how many instances exist and get their index values
                     for(int x = 0; x < temp.size(); x++){
-                        if(Objects.equals(temp.elementAt(x), person.getHand().elementAt(choice))){
+                        if(Objects.equals(temp.elementAt(x), chosen)){
                             cardIndices.add(x);
                         }
                     }
@@ -276,6 +277,14 @@ public class GoFish extends Game {
                 System.out.println("You had " + playerBooks + " books whereas the CPU had " + AIBooks + " Books.");
                 winner = 0;
                 saveStats("GoFishStats",0);   //save their stats 0 for loss
+            }
+        }
+        if (!goFish.isDeckEmpty()){
+            if (person.getHand().isEmpty()){
+                person.AddCard(goFish.takeTopCard());
+            }
+            if (AI.getHand().isEmpty()){
+                AI.AddCard(goFish.takeTopCard());
             }
         }
         return person;

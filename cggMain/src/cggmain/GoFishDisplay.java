@@ -5,13 +5,9 @@
 package cggmain;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.awt.MouseInfo;
 import java.util.Vector;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import static cggmain.Game.faceCardImage;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -42,21 +38,45 @@ public class GoFishDisplay extends javax.swing.JFrame {
         playerTurn = true;
         playerHand = goFishGame.startMatch();
         turnBox.setText("It's your turn");
-        faceCards.add(playerCard1);
+       /* faceCards.add(playerCard1);
         faceCards.add(playerCard2);
         faceCards.add(playerCard3);
         faceCards.add(playerCard4);
         faceCards.add(playerCard5);
         faceCards.add(playerCard6);
-        faceCards.add(playerCard7);
-        for(int i = 0; i < 7; i++){
-            faceCards.elementAt(i).setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+playerHand.getHand().elementAt(i)+".png")));
-        }
+        faceCards.add(playerCard7);  */
+        displayHand();
         String msg = "Your current number of books: 0\nThe AI's current number of books: 0\nGood luck!";
         resultBox.setText(msg);
         this.setVisible(true);
     }
 
+
+    private void displayHand(){
+        int x=100+(playerHand.getHand().size()-1)*40;
+        for(int i = 0; i < playerHand.getHand().size(); i++){
+            faceCards.add(new javax.swing.JLabel());
+        }
+        for (int i=playerHand.getHand().size()-1; i>=0;i--){
+            faceCards.elementAt(i).setBounds(x,550,128,182);
+            faceCards.elementAt(i).setText("jLabel"+(i+1));
+            faceCards.elementAt(i).setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+playerHand.getHand().elementAt(i)+".png")));
+            GoFishBackground.add(faceCards.elementAt(i));
+            x-=40;
+        }
+        GoFishBackground.validate();
+        GoFishBackground.repaint();
+    }
+    
+    private void removeHand(int cards){
+        for(int i = 0; i < cards; i++){
+            GoFishBackground.remove(faceCards.elementAt(i));
+            GoFishBackground.validate();
+            GoFishBackground.repaint();
+        }
+        faceCards.clear();
+    }
+    
     /**
      * This function is to be called after a turn has been run through. It determines updates to the text box and visible cards
      * 
@@ -65,35 +85,29 @@ public class GoFishDisplay extends javax.swing.JFrame {
      * @param lastPScore
      * @param lastAScore 
      */
+
     private void afterGame(int lastSize, int lastAISize, int lastPScore, int lastAScore){
         int playerScore = goFishGame.getPlayerBooks();
         int AIScore = goFishGame.getAIBooks();
         int currSize = playerHand.getSize();
         int AISize = goFishGame.getAISize();
-        
-        // if the player's hand is smaller than 7 cards, only display the held cards
-        if(currSize < 7){
-            for(int i = 0; i < currSize; i++){
-                faceCards.elementAt(i).setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+playerHand.getHand().elementAt(i)+".png")));
-                faceCards.elementAt(i).setVisible(true);
-            }
-            for(int i = currSize; i < 7; i++){
-                faceCards.elementAt(i).setVisible(false);
-            }
-        }
-        // otherwise only display the first 7 cards in their hand
-        else
-        {
-            for(int i = 0; i < 7; i++){
-                faceCards.elementAt(i).setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+playerHand.getHand().elementAt(i)+".png")));
-                faceCards.elementAt(i).setVisible(true);
-            }
-        }
+
+        displayHand();
         
         // start of textbox message stating the round's result. gives current score(s)
         String msg = "Your current number of books: " + String.valueOf(playerScore) + "\nThe AI's current number of books: " + String.valueOf(AIScore) + "\n\n";
+        // if the player got a book from drawing
+        if(lastPScore < playerScore && AISize == lastAISize){
+            msg = msg + "You earned a book! Awesome!";
+            playerTurn = false;
+        }
+        // if the AI got a book from drawing
+        else if(lastAScore <  AIScore && currSize == lastSize){
+            msg = msg + "The AI got a book :(";
+            playerTurn = true;
+        }
         // if the player got a book
-        if(lastPScore < playerScore){
+        else if(lastPScore < playerScore){
             msg = msg + "You earned a book! Awesome!";
             playerTurn = true;
         }
@@ -143,13 +157,6 @@ public class GoFishDisplay extends javax.swing.JFrame {
         GoFishBackground = new javax.swing.JPanel();
         aiStart = new javax.swing.JButton();
         DrawPileDeck = new javax.swing.JLabel();
-        playerCard1 = new javax.swing.JLabel();
-        playerCard2 = new javax.swing.JLabel();
-        playerCard3 = new javax.swing.JLabel();
-        playerCard4 = new javax.swing.JLabel();
-        playerCard5 = new javax.swing.JLabel();
-        playerCard6 = new javax.swing.JLabel();
-        playerCard7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         resultBox = new javax.swing.JTextPane();
         placeholderAIHand = new javax.swing.JLabel();
@@ -167,6 +174,11 @@ public class GoFishDisplay extends javax.swing.JFrame {
         GoFishBackground.setBackground(new java.awt.Color(0, 153, 0));
         GoFishBackground.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         GoFishBackground.setPreferredSize(new java.awt.Dimension(1480, 720));
+        GoFishBackground.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GoFishBackgroundMouseClicked(evt);
+            }
+        });
 
         aiStart.setText("Start AI's turn");
         aiStart.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -180,62 +192,6 @@ public class GoFishDisplay extends javax.swing.JFrame {
         DrawPileDeck.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DrawPileDeckMouseClicked(evt);
-            }
-        });
-
-        playerCard1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/27.png"))); // NOI18N
-        playerCard1.setText("jLabel1");
-        playerCard1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playerCard1MouseClicked(evt);
-            }
-        });
-
-        playerCard2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/27.png"))); // NOI18N
-        playerCard2.setText("jLabel2");
-        playerCard2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playerCard2MouseClicked(evt);
-            }
-        });
-
-        playerCard3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/27.png"))); // NOI18N
-        playerCard3.setText("jLabel3");
-        playerCard3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playerCard3MouseClicked(evt);
-            }
-        });
-
-        playerCard4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/27.png"))); // NOI18N
-        playerCard4.setText("jLabel4");
-        playerCard4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playerCard4MouseClicked(evt);
-            }
-        });
-
-        playerCard5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/27.png"))); // NOI18N
-        playerCard5.setText("jLabel5");
-        playerCard5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playerCard5MouseClicked(evt);
-            }
-        });
-
-        playerCard6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/27.png"))); // NOI18N
-        playerCard6.setText("jLabel4");
-        playerCard6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playerCard6MouseClicked(evt);
-            }
-        });
-
-        playerCard7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/27.png"))); // NOI18N
-        playerCard7.setText("jLabel4");
-        playerCard7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playerCard7MouseClicked(evt);
             }
         });
 
@@ -276,24 +232,8 @@ public class GoFishDisplay extends javax.swing.JFrame {
         GoFishBackground.setLayout(GoFishBackgroundLayout);
         GoFishBackgroundLayout.setHorizontalGroup(
             GoFishBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(GoFishBackgroundLayout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(playerCard1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(playerCard2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(playerCard3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(playerCard4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(playerCard5, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(playerCard6, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(playerCard7, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 99, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GoFishBackgroundLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(105, Short.MAX_VALUE)
                 .addGroup(GoFishBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GoFishBackgroundLayout.createSequentialGroup()
                         .addComponent(aiStart)
@@ -342,7 +282,7 @@ public class GoFishDisplay extends javax.swing.JFrame {
                     .addGroup(GoFishBackgroundLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BackButton1)
-                        .addGap(180, 180, 180))
+                        .addGap(386, 386, 386))
                     .addGroup(GoFishBackgroundLayout.createSequentialGroup()
                         .addGroup(GoFishBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(GoFishBackgroundLayout.createSequentialGroup()
@@ -355,16 +295,7 @@ public class GoFishDisplay extends javax.swing.JFrame {
                                 .addGroup(GoFishBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(DrawPileDeck, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(turnBox))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)))
-                .addGroup(GoFishBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(playerCard1)
-                    .addComponent(playerCard2)
-                    .addComponent(playerCard3)
-                    .addComponent(playerCard4)
-                    .addComponent(playerCard5)
-                    .addComponent(playerCard7)
-                    .addComponent(playerCard6))
-                .addGap(24, 24, 24))
+                        .addContainerGap(331, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -394,6 +325,7 @@ public class GoFishDisplay extends javax.swing.JFrame {
             int currSize = playerHand.getSize();
             int aiSize = goFishGame.getAISize();
             playerHand = goFishGame.Gameplay(0, 0);
+            removeHand(currSize);
             afterGame(currSize, aiSize, pScore, aScore);
         }
         else{
@@ -401,117 +333,35 @@ public class GoFishDisplay extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_aiStartMouseClicked
 
-    private void playerCard1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerCard1MouseClicked
-        // Player's turn (chose card 1):
-        if(playerTurn){
-            int pScore = goFishGame.getPlayerBooks();
-            int aScore = goFishGame.getAIBooks();
-            int currSize = playerHand.getSize();
-            int aiSize = goFishGame.getAISize();
-            playerHand = goFishGame.Gameplay(0, 1);
-            afterGame(currSize, aiSize, pScore, aScore);
-        }
-        else{
-            resultBox.setText("It's not your turn.\nThe AI needs to do its turn");
-        }
-    }//GEN-LAST:event_playerCard1MouseClicked
-
-    private void playerCard2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerCard2MouseClicked
-        // Player's turn (chose card 2):
-        if(playerTurn){
-            int pScore = goFishGame.getPlayerBooks();
-            int aScore = goFishGame.getAIBooks();
-            int currSize = playerHand.getSize();
-            int aiSize = goFishGame.getAISize();
-            playerHand = goFishGame.Gameplay(1, 1);
-            afterGame(currSize, aiSize, pScore, aScore);
-        }
-        else{
-            resultBox.setText("It's not your turn.\nThe AI needs to do its turn");
-        }
-    }//GEN-LAST:event_playerCard2MouseClicked
-
-    private void playerCard3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerCard3MouseClicked
-        // Player's turn (chose card 3):
-        if(playerTurn){
-            int pScore = goFishGame.getPlayerBooks();
-            int aScore = goFishGame.getAIBooks();
-            int currSize = playerHand.getSize();
-            int aiSize = goFishGame.getAISize();
-            playerHand = goFishGame.Gameplay(2, 1);
-            afterGame(currSize, aiSize, pScore, aScore);
-        }
-        else{
-            resultBox.setText("It's not your turn.\nThe AI needs to do its turn");
-        }
-    }//GEN-LAST:event_playerCard3MouseClicked
-
-    private void playerCard4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerCard4MouseClicked
-        // Player's turn (chose card 4):
-        if(playerTurn){
-            int pScore = goFishGame.getPlayerBooks();
-            int aScore = goFishGame.getAIBooks();
-            int currSize = playerHand.getSize();
-            int aiSize = goFishGame.getAISize();
-            playerHand = goFishGame.Gameplay(3, 1);
-            afterGame(currSize, aiSize, pScore, aScore);
-        }
-        else{
-            resultBox.setText("It's not your turn.\nThe AI needs to do its turn");
-        }
-    }//GEN-LAST:event_playerCard4MouseClicked
-
-    private void playerCard5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerCard5MouseClicked
-        // Player's turn (chose card 5):
-        if(playerTurn){
-            int pScore = goFishGame.getPlayerBooks();
-            int aScore = goFishGame.getAIBooks();
-            int currSize = playerHand.getSize();
-            int aiSize = goFishGame.getAISize();
-            playerHand = goFishGame.Gameplay(4, 1);
-            afterGame(currSize, aiSize, pScore, aScore);
-        }
-        else{
-            resultBox.setText("It's not your turn.\nThe AI needs to do its turn");
-        }
-    }//GEN-LAST:event_playerCard5MouseClicked
-
-    private void playerCard6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerCard6MouseClicked
-        // Player's turn (chose card 6):
-        if(playerTurn){
-            int pScore = goFishGame.getPlayerBooks();
-            int aScore = goFishGame.getAIBooks();
-            int currSize = playerHand.getSize();
-            int aiSize = goFishGame.getAISize();
-            playerHand = goFishGame.Gameplay(5, 1);
-            afterGame(currSize, aiSize, pScore, aScore);
-        }
-        else{
-            resultBox.setText("It's not your turn.\nThe AI needs to do its turn");
-        }
-    }//GEN-LAST:event_playerCard6MouseClicked
-
-    private void playerCard7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerCard7MouseClicked
-        // Player's turn (chose card 7):
-        if(playerTurn){
-            int pScore = goFishGame.getPlayerBooks();
-            int aScore = goFishGame.getAIBooks();
-            int currSize = playerHand.getSize();
-            int aiSize = goFishGame.getAISize();
-            playerHand = goFishGame.Gameplay(6, 1);
-            afterGame(currSize, aiSize, pScore, aScore);
-        }
-        else{
-            resultBox.setText("It's not your turn.\nThe AI needs to do its turn");
-        }
-    }//GEN-LAST:event_playerCard7MouseClicked
-
     private void BackButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackButton1MouseClicked
         // TODO add your handling code here:
         this.dispose();
         CGGMenuDisplay mainMenu = new CGGMenuDisplay();
         mainMenu.setVisible(true);
     }//GEN-LAST:event_BackButton1MouseClicked
+
+    private void GoFishBackgroundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GoFishBackgroundMouseClicked
+        // TODO add your handling code here:
+        int x=0, y=0, cardIndex=-1;
+        if (playerTurn){
+            x=evt.getX();
+            y=evt.getY();
+            if (x<=100+(playerHand.getHand().size()-1)*40+128 && x>=100 && y<=550+182 && y>=550){
+                while (x>=100){
+                    x-=40;
+                    cardIndex++;
+                    if (cardIndex == playerHand.getHand().size()-1) break;
+                }
+                int pScore = goFishGame.getPlayerBooks();
+                int aScore = goFishGame.getAIBooks();
+                int currSize = playerHand.getSize();
+                int aiSize = goFishGame.getAISize();
+                playerHand = goFishGame.Gameplay(cardIndex, 1);
+                removeHand(currSize);
+                afterGame(currSize, aiSize, pScore, aScore);
+            }
+        }
+    }//GEN-LAST:event_GoFishBackgroundMouseClicked
 
     /**
      * @param args the command line arguments
@@ -561,13 +411,6 @@ public class GoFishDisplay extends javax.swing.JFrame {
     private javax.swing.JLabel placeholderAIHand4;
     private javax.swing.JLabel placeholderAIHand5;
     private javax.swing.JLabel placeholderAIHand6;
-    private javax.swing.JLabel playerCard1;
-    private javax.swing.JLabel playerCard2;
-    private javax.swing.JLabel playerCard3;
-    private javax.swing.JLabel playerCard4;
-    private javax.swing.JLabel playerCard5;
-    private javax.swing.JLabel playerCard6;
-    private javax.swing.JLabel playerCard7;
     private javax.swing.JTextPane resultBox;
     private javax.swing.JLabel turnBox;
     // End of variables declaration//GEN-END:variables
