@@ -1,6 +1,7 @@
 package cggmain;
 
 import java.util.*;
+import javax.swing.JLabel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -15,15 +16,26 @@ public class GoFish extends Game {
     
     private final int handSize;
     private final int playerCount;
+    private Hands person;
+    private Hands AI;
+    private Game goFish = new Game();
+    private boolean gamePlaying;
     public int playerBooks;
     public int AIBooks;
+    public int winner;
     
     GoFish(){
         handSize=7;
         playerCount=2;
         playerBooks=0;
         AIBooks=0;
-        Game();
+        person=new Hands();
+        AI=new Hands();
+        goFish.Game();
+        goFish.Shuffle();
+        person.setHand(goFish.Deal(7));
+        AI.setHand(goFish.Deal(7));
+        gamePlaying=true;
     }    
     
     /**
@@ -37,6 +49,29 @@ public class GoFish extends Game {
     
     int getPlayerCount(){
         return playerCount;
+    }
+    
+    int getPlayerBooks(){
+        return playerBooks;
+    }
+    
+    int getAIBooks(){
+        return AIBooks;
+    }
+    
+    boolean isGame(){
+        return gamePlaying;
+    }
+    
+    int getAISize(){
+        return AI.getSize();
+    }
+    
+    /**
+     * This function is called on game start and sets up ai and player hands
+     */
+    Hands startMatch(){
+        return person;
     }
     
     /**
@@ -97,44 +132,45 @@ public class GoFish extends Game {
     
     /**
      * Runs the main loop of Go Fish
+     * 
+     * @param choice    the choice value of the player from their hand
+     * @param turn      the variable showing who's turn it is (1 for player, else for AI)
+     * @return          returns the player's hand after the turn
      */
-    void Gameplay() {
-        // create player and AI hands
-        Hands player=new Hands();
-        Hands AI=new Hands();
-        // create war card deck
-        Game gfDeck=new Game();
-        gfDeck.Game();
-        gfDeck.Shuffle();
-        // deal deck to player and AI accordingly based on initial hand size
-        player.setHand(gfDeck.Deal(7));
-        AI.setHand(gfDeck.Deal(7));
-        // initialization values
-        Scanner scan = new Scanner(System.in);
-        int valAsked = 55;
+    Hands Gameplay(int choice, int turn) {
         Vector<Integer> cardIndices = new Vector<>();
-        boolean playerT = true;
+        boolean playerT;
+        playerT = (turn == 1);
         // there can only ever be 13 books in a game of Go Fish
-        while ((playerBooks + AIBooks) != 13){
+        if (gamePlaying){
             // player's turn
             cardIndices.clear();
             if(playerT == true){
-                if (player.getHand().isEmpty()){
-                    player.AddCard(gfDeck.takeTopCard());
+                if (person.getHand().isEmpty()){
+                    person.AddCard(goFish.takeTopCard());
                 }
                 Vector<Integer> cleanHand = new Vector<>();
-                cleanHand.addAll(player.getHand());
-                System.out.print("Your hand is: ");
-                for(int i = 0; i < player.getSize()-1; i++){
+                cleanHand.addAll(person.getHand());
+                System.out.print("\n\nYour hand is: ");
+                for(int i = 0; i < person.getSize()-1; i++){
                     int val = cleanHand.get(i);
                     while(val > 14) {val -= 13;}
-                    System.out.print("(" + val + ") " + player.getHand().get(i) + ", ");
+                    System.out.print("(" + val + ") " + person.getHand().get(i) + ", ");
                 }
-                int val = cleanHand.lastElement();
-                while(val > 14) {val -= 13;}
-                System.out.println("(" + val + ") " + player.getHand().lastElement());
-                System.out.println("What card will you ask for? (11 = jack, 12 = queen, 13 = king, 14 = ace)");
-                valAsked = scan.nextInt();
+                int valL = cleanHand.lastElement();
+                while(valL > 14) {valL -= 13;}
+                System.out.println("(" + valL + ") " + person.getHand().lastElement());
+                cleanHand.clear();
+                cleanHand.addAll(AI.getHand());
+                System.out.print("The AI's hand is: ");
+                for(int i = 0; i < AI.getSize()-1; i++){
+                    int val = cleanHand.get(i);
+                    while(val > 14) {val -= 13;}
+                    System.out.print("(" + val + ") " + AI.getHand().get(i) + ", ");
+                }
+                valL = cleanHand.lastElement();
+                while(valL > 14) {valL -= 13;}
+                System.out.println("(" + valL + ") " + AI.getHand().lastElement() + "\n\n");
                 // make a duplicate vector to attain index values
                 Vector<Integer> temp = new Vector<>();
                 temp.addAll(AI.getHand());
@@ -145,48 +181,50 @@ public class GoFish extends Game {
                     }
                 }
                 // now check if the AI has the card asked for
-                if(temp.contains(valAsked)){
+                int chosen = person.getHand().elementAt(choice);
+                while (chosen > 14) {chosen -= 13;}
+                System.out.println("you chose card value: " + String.valueOf(chosen));
+                if(temp.contains(person.getHand().elementAt(choice))){
                     // if so, see how many instances exist and get their index values
                     for(int x = 0; x < temp.size(); x++){
-                        if(temp.elementAt(x) == valAsked){
+                        if(Objects.equals(temp.elementAt(x), person.getHand().elementAt(choice))){
                             cardIndices.add(x);
                         }
                     }
                     // add the card to the player's hand and remove it from the AI's hand
                     // this is done in reverse order so we don't have to worry about index handling
                     for(int i = cardIndices.size()-1; i >= 0; i--){
-                        player.AddCard(AI.getHand().elementAt(cardIndices.get(i)));
-                        AI.RemoveCard(player.getHand().lastElement());
+                        person.AddCard(AI.getHand().elementAt(cardIndices.get(i)));
+                        AI.RemoveCard(person.getHand().lastElement());
                     }
                     System.out.println("You got " + cardIndices.size() + " card(s) from the CPU and you get to go again.\n");
                 }
                 else{
-                    if(gfDeck.isDeckEmpty()){
+                    if(goFish.isDeckEmpty()){
                         System.out.println("I would say Go Fish, but there's no more cards in the deck");
                         System.out.println("Just pick a different card next time");
                     }
                     else {
                         System.out.println("Go Fish");
-                        player.AddCard(gfDeck.takeTopCard());
+                        person.AddCard(goFish.takeTopCard());
                     }
-                    playerT = false;
                 }
-                player = checkForBook(player, 1);
+                person = checkForBook(person, 1);
             }
             // CPU's turn
             else{
                 if (AI.getHand().isEmpty()){
-                    AI.AddCard(gfDeck.takeTopCard());
+                    AI.AddCard(goFish.takeTopCard());
                 }
                 Random randGen = new Random();
                 // choose a card from the CPU's hand
                 int randNum = randGen.nextInt(AI.getSize());
-                valAsked = AI.getHand().elementAt(randNum);
+                int valAsked = AI.getHand().elementAt(randNum);
                 while(valAsked > 14) {valAsked-=13;}
                 System.out.println("The CPU is fishing for any " + valAsked + " card(s) you have");
                 // make a duplicate vector to attain index values
                 Vector<Integer> temp = new Vector<>();
-                temp.addAll(player.getHand());
+                temp.addAll(person.getHand());
                 // start by making all values in the temp vector in range of 2-14
                 for(int i = 0; i < temp.size(); i++){
                     while(temp.get(i) > 14){
@@ -204,33 +242,42 @@ public class GoFish extends Game {
                     // add the card to the AI's hand and remove it from the player's hand
                     // this is done in reverse order so we don't have to worry about index handling
                     for(int i = cardIndices.size()-1; i >= 0; i--){
-                        AI.AddCard(player.getHand().elementAt(cardIndices.get(i)));
-                        player.RemoveCard(AI.getHand().lastElement());
+                        AI.AddCard(person.getHand().elementAt(cardIndices.get(i)));
+                        person.RemoveCard(AI.getHand().lastElement());
                     }
                     System.out.println("The CPU got " + cardIndices.size() + " card(s) from you and will now go again\n");
                 }
                 else{
-                    if(gfDeck.isDeckEmpty()){
+                    if(goFish.isDeckEmpty()){
                         System.out.println("The CPU would Go Fish, but there's no more cards in the deck");
                     }
                     else {
                         System.out.println("The CPU will Go Fish");
-                        AI.AddCard(gfDeck.takeTopCard());
+                        AI.AddCard(goFish.takeTopCard());
                     }
-                    playerT = true;
                 }
                 AI = checkForBook(AI, 2);
             }
         }
-        if(playerBooks > AIBooks){
-            System.out.println("You won!");
-            System.out.println("You had " + playerBooks + " books whereas the CPU had " + AIBooks + " Books.");
-            saveStats("GoFishStats",1);  //save their stats 1 for win
+        else
+        {
+            return person;
         }
-        else {
-            System.out.println("The CPU has beat you.");
-            System.out.println("You had " + playerBooks + " books whereas the CPU had " + AIBooks + " Books.");
-            saveStats("GoFishStats",0);   //save their stats 0 for loss
+        if((playerBooks + AIBooks) == 13){
+            gamePlaying = false;
+            if(playerBooks > AIBooks){
+                System.out.println("You won!");
+                System.out.println("You had " + playerBooks + " books whereas the CPU had " + AIBooks + " Books.");
+                winner = 1;
+                saveStats("GoFishStats",1);  //save their stats 1 for win
+            }
+            else {
+                System.out.println("The CPU has beat you.");
+                System.out.println("You had " + playerBooks + " books whereas the CPU had " + AIBooks + " Books.");
+                winner = 0;
+                saveStats("GoFishStats",0);   //save their stats 0 for loss
+            }
         }
+        return person;
     }
 }
