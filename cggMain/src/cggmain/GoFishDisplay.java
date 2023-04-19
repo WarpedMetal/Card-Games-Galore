@@ -38,28 +38,19 @@ public class GoFishDisplay extends javax.swing.JFrame {
         playerTurn = true;
         playerHand = goFishGame.startMatch();
         turnBox.setText("It's your turn");
-       /* faceCards.add(playerCard1);
-        faceCards.add(playerCard2);
-        faceCards.add(playerCard3);
-        faceCards.add(playerCard4);
-        faceCards.add(playerCard5);
-        faceCards.add(playerCard6);
-        faceCards.add(playerCard7);  */
         displayHand();
         String msg = "Your current number of books: 0\nThe AI's current number of books: 0\nGood luck!";
         resultBox.setText(msg);
         this.setVisible(true);
-        
-
     }
 
 
-    private void displayHand(){
-        int x=100+(playerHand.getHand().size()-1)*40;
-        for(int i = 0; i < playerHand.getHand().size(); i++){
+    private void displayHand(){ //This will display the Player's Hand
+        int x=100+(playerHand.getHand().size()-1)*40; //This is the x cord for the final card
+        for(int i = 0; i < playerHand.getHand().size(); i++){ //This add all cards in the hand into a vector of JLabels
             faceCards.add(new javax.swing.JLabel());
         }
-        for (int i=playerHand.getHand().size()-1; i>=0;i--){
+        for (int i=playerHand.getHand().size()-1; i>=0;i--){ //This sets everything up for the hand backwards so that it will display the final card on top
             faceCards.elementAt(i).setBounds(x,550,128,182);
             faceCards.elementAt(i).setText("jLabel"+(i+1));
             faceCards.elementAt(i).setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+playerHand.getHand().elementAt(i)+".png")));
@@ -70,12 +61,12 @@ public class GoFishDisplay extends javax.swing.JFrame {
         GoFishBackground.repaint();
     }
     
-    private void removeHand(int cards){
+    private void removeHand(int cards){ //This function deletes the player hand from the screen
         for(int i = 0; i < cards; i++){
             GoFishBackground.remove(faceCards.elementAt(i));
-            GoFishBackground.validate();
-            GoFishBackground.repaint();
         }
+        GoFishBackground.validate();
+        GoFishBackground.repaint();
         faceCards.clear();
     }
     
@@ -88,7 +79,7 @@ public class GoFishDisplay extends javax.swing.JFrame {
      * @param lastAScore 
      */
 
-    private void afterGame(int lastSize, int lastAISize, int lastPScore, int lastAScore){
+    private void afterGame(int lastSize, int lastAISize, int lastPScore, int lastAScore){ //This function is called after each round to tell the player what occured
         int playerScore = goFishGame.getPlayerBooks();
         int AIScore = goFishGame.getAIBooks();
         int currSize = playerHand.getSize();
@@ -154,7 +145,7 @@ public class GoFishDisplay extends javax.swing.JFrame {
                 resultBox.setText("You won! Congrats!");
                 // 0 == AI win
             } else if (goFishGame.getWinVal() == 0){
-                resultBox.setText("You Lose. :(");
+                resultBox.setText("You Lost. :(");
             }
         }
     }
@@ -356,17 +347,18 @@ public class GoFishDisplay extends javax.swing.JFrame {
         mainMenu.setVisible(true);
     }//GEN-LAST:event_BackButton1MouseClicked
 
+    //This detects any click on the background and from the cords it was clicked it can tell what card was clicked on from the vector of labels
     private void GoFishBackgroundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GoFishBackgroundMouseClicked
         // TODO add your handling code here:
-        int x=0, y=0, cardIndex=-1;
+        int x=0, y=0, cardIndex=-1; //x cord, y cord, the index of the card that was clicked
         if (playerTurn){
             x=evt.getX();
             y=evt.getY();
-            if (x<=100+(playerHand.getHand().size()-1)*40+128 && x>=100 && y<=550+182 && y>=550){
+            if (x<=100+(playerHand.getHand().size()-1)*40+128 && x>=100 && y<=550+182 && y>=550){ //This checks to see if the click occured within the hand
                 while (x>=100){
                     x-=40;
                     cardIndex++;
-                    if (cardIndex == playerHand.getHand().size()-1) break;
+                    if (cardIndex == playerHand.getHand().size()-1) break; //To fix if the final card is click not on the left side
                 }
                 int pScore = goFishGame.getPlayerBooks();
                 int aScore = goFishGame.getAIBooks();

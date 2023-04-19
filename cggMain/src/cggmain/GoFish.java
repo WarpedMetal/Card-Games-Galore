@@ -289,6 +289,7 @@ public class GoFish extends Game {
         }
         return person;
     }
+    
     int getWinVal(){
         return winner;
     }
