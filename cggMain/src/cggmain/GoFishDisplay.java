@@ -49,6 +49,8 @@ public class GoFishDisplay extends javax.swing.JFrame {
         String msg = "Your current number of books: 0\nThe AI's current number of books: 0\nGood luck!";
         resultBox.setText(msg);
         this.setVisible(true);
+        
+
     }
 
 
@@ -143,7 +145,20 @@ public class GoFishDisplay extends javax.swing.JFrame {
         else{
             turnBox.setText("AI's turn");
         }
+        
+        // Count the books to tell when the game has conlcuded
+        if(goFishGame.getAIBooks() + goFishGame.getPlayerBooks() == 13){
+            // Read the win value in war
+            if (goFishGame.getWinVal() == 1){
+                // 1 == player win
+                resultBox.setText("You won! Congrats!");
+                // 0 == AI win
+            } else if (goFishGame.getWinVal() == 0){
+                resultBox.setText("You Lose. :(");
+            }
+        }
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -226,6 +241,7 @@ public class GoFishDisplay extends javax.swing.JFrame {
         });
 
         turnBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        turnBox.setForeground(new java.awt.Color(255, 255, 255));
         turnBox.setText("Turn displayed here");
 
         javax.swing.GroupLayout GoFishBackgroundLayout = new javax.swing.GroupLayout(GoFishBackground);
