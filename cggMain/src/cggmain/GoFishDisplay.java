@@ -50,6 +50,7 @@ public class GoFishDisplay extends javax.swing.JFrame {
      * displays the player's current hand
      */
     private void displayHand(){
+        playerHand.SortHand();
         int x=100+(playerHand.getHand().size()-1)*40; //This is the x cord for the final card
         for(int i = 0; i < playerHand.getHand().size(); i++){ //This add all cards in the hand into a vector of JLabels
             faceCards.add(new javax.swing.JLabel());
@@ -378,7 +379,6 @@ public class GoFishDisplay extends javax.swing.JFrame {
                 int aiSize = goFishGame.getAISize();
                 playerHand = goFishGame.Gameplay(cardIndex, 1);
                 removeHand(currSize);
-                playerHand.SortHand();
                 afterGame(currSize, aiSize, pScore, aScore);
             }
         }
