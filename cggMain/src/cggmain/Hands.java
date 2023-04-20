@@ -41,7 +41,7 @@ public class Hands {
     /**
      * sort the players hand for them
      * 
-     * @param oldHand the hand object that will be sorted
+     * @param  Sorts hand
      * @return 
      */
     void SortHand(){
