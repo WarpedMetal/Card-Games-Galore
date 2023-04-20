@@ -1,6 +1,9 @@
 # Card-Games-Galore-Team6-Section2
 Repo for CS321 project collaboration
 
+Disclaimer:
+There is a slight bug in our program that sometimes the program will be a bit slow and won't input your clicks. If this happens just wait a second or 2 and it should be fine. We could not figure out what is causing this.
+
 For our project, Card Game Galore, we would like you to start off by running the program. 
 Then because this is your fist time playing the game you decide to start off by reading the rules for War.
 You then close out of the rules window and decide to play a game, so you click play.
