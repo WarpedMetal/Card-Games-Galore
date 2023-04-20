@@ -10,8 +10,9 @@ import java.util.Vector;
 import javax.swing.JLabel;
 
 /**
- *
- * @author jdohe/bryce
+ *  main handler for the GoFish GUI display
+ * 
+ * @author jdohe/bryce/chris
  */
 public class GoFishDisplay extends javax.swing.JFrame {
 
@@ -45,7 +46,10 @@ public class GoFishDisplay extends javax.swing.JFrame {
     }
 
 
-    private void displayHand(){ //This will display the Player's Hand
+    /**
+     * displays the player's current hand
+     */
+    private void displayHand(){
         int x=100+(playerHand.getHand().size()-1)*40; //This is the x cord for the final card
         for(int i = 0; i < playerHand.getHand().size(); i++){ //This add all cards in the hand into a vector of JLabels
             faceCards.add(new javax.swing.JLabel());
@@ -61,7 +65,12 @@ public class GoFishDisplay extends javax.swing.JFrame {
         GoFishBackground.repaint();
     }
     
-    private void removeHand(int cards){ //This function deletes the player hand from the screen
+    /**
+     * deletes the player's hand from the screen (visually)
+     * 
+     * @param cards the amount of cards to be removed from the screen
+     */
+    private void removeHand(int cards){
         for(int i = 0; i < cards; i++){
             GoFishBackground.remove(faceCards.elementAt(i));
         }
@@ -73,12 +82,11 @@ public class GoFishDisplay extends javax.swing.JFrame {
     /**
      * This function is to be called after a turn has been run through. It determines updates to the text box and visible cards
      * 
-     * @param lastSize
-     * @param lastAISize
-     * @param lastPScore
-     * @param lastAScore 
+     * @param lastSize  the last size known of the player's hand before the most recent round
+     * @param lastAISize the last size known of the AI's hand before the most recent round
+     * @param lastPScore the last known score of the player before the most recent round
+     * @param lastAScore the last known score of the AI before the most recent round
      */
-
     private void afterGame(int lastSize, int lastAISize, int lastPScore, int lastAScore){ //This function is called after each round to tell the player what occured
         int playerScore = goFishGame.getPlayerBooks();
         int AIScore = goFishGame.getAIBooks();
@@ -324,6 +332,11 @@ public class GoFishDisplay extends javax.swing.JFrame {
         System.out.print("Go fish from the draw pile.");
     }//GEN-LAST:event_DrawPileDeckMouseClicked
 
+    /**
+     * this function is called when the AI "take turn" button is hit to give the AI its turn
+     * 
+     * @param evt 
+     */
     private void aiStartMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aiStartMouseClicked
         // AI's turn:
         if(!playerTurn){
@@ -340,6 +353,11 @@ public class GoFishDisplay extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_aiStartMouseClicked
 
+    /**
+     * closes the GoFish game and brings back the main menu upon call
+     * 
+     * @param evt 
+     */
     private void BackButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackButton1MouseClicked
         // TODO add your handling code here:
         this.dispose();
@@ -347,7 +365,11 @@ public class GoFishDisplay extends javax.swing.JFrame {
         mainMenu.setVisible(true);
     }//GEN-LAST:event_BackButton1MouseClicked
 
-    //This detects any click on the background and from the cords it was clicked it can tell what card was clicked on from the vector of labels
+    /**
+     * This detects any click on the background and from the cords it was clicked it can tell what card was clicked on from the vector of labels
+     * 
+     * @param evt
+     */
     private void GoFishBackgroundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GoFishBackgroundMouseClicked
         // TODO add your handling code here:
         int x=0, y=0, cardIndex=-1; //x cord, y cord, the index of the card that was clicked

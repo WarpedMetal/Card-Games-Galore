@@ -11,7 +11,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 
 /**
- *
+ *  main menu display that starts up on program run. point of beginning
+ * 
  * @author jdohe
  */
 public class CGGMenuDisplay extends javax.swing.JFrame {
@@ -189,6 +190,11 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButtonQuitActionPerformed
 
+    /**
+     * loads a debug statement to help specify which game was chosen in the GUI
+     * 
+     * @param evt 
+     */
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
         // listen for user selection from list of games
@@ -196,6 +202,11 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         System.out.println("Selection is: " + gameSelection);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
+    /**
+     * upon clicking the "start" button, this function starts the respective game's core gameplay loop
+     * 
+     * @param evt 
+     */
     private void jButtonPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonPlayMouseClicked
         // TODO add your handling code here:
         if (jComboBox2.getSelectedItem() == "War"){
@@ -210,6 +221,11 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
       }
     }//GEN-LAST:event_jButtonPlayMouseClicked
 
+    /**
+     * This function is used to specify a specific game's rules in a pop-up window
+     * 
+     * @param evt 
+     */
     private void jButtonRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRulesActionPerformed
         // TODO add your handling code here:
         if (jComboBox2.getSelectedItem() == "War"){
@@ -241,6 +257,11 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonRulesActionPerformed
 
+    /**
+     * this function retrieves the persistent stats of a player related to a specific game
+     * 
+     * @param evt 
+     */
     private void jButtonHighScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHighScoreActionPerformed
         // TODO add your handling code here:
          if (jComboBox2.getSelectedItem() == "War"){

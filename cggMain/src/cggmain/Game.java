@@ -14,7 +14,8 @@ import javax.swing.ImageIcon;
  */
 
 /**
- *
+ *  main handler class for everything related to a card deck used in a game
+ * 
  * @author chris/bryce/jordan
  * hi everyone :D
  */
@@ -81,7 +82,7 @@ public class Game{
     }
     
     /**
-     * this will deal the deck to one player for any hand size
+     * this will deal the deck to one player for any specified hand size
      * 
      * @param handSize
      * @return 
@@ -95,18 +96,38 @@ public class Game{
         return allHands;
     }
     
+    /**
+     * used to set specific rules of a game should it need to be modified on the fly
+     * 
+     * @param specificRules 
+     */
     void setRules(String specificRules){
         rules=specificRules;
     }
     
+    /**
+     * returns the rules of the game object
+     * 
+     * @return 
+     */
     String getRules(){
         return rules;
     }
     
+    /**
+     * sets the stats of a specified game object
+     * 
+     * @param specificStats 
+     */
     void setStats(String specificStats){
         stats=specificStats;
     }
     
+    /**
+     * returns the stats of a specified game object
+     * 
+     * @return 
+     */
     String getStats(){
         return stats;
     }
@@ -118,6 +139,12 @@ public class Game{
     Win Precentage: 
     */
     
+    /**
+     * the function used to save stats of a game's data to a persistent file
+     * 
+     * @param gamePath the filepath where the persistence file is located
+     * @param wol the status of if the player won or lost the game
+     */
     void saveStats(String gamePath, int wol){
         int won=0;
         int lost=0;  //some variables to help edit the stats
@@ -158,6 +185,11 @@ public class Game{
         }
     }
     
+    /**
+     * the function that supplies the stats data with data read from the persistence file
+     * 
+     * @param gamePath filepath of the persistence file
+     */
     void readStats(String gamePath){
         String homeDirectory = System.getProperty("user.home");  //setting homedirectory
         String fullDirSpec = homeDirectory + "\\CardGamesGalore\\"+gamePath+".txt";  //creating a file path in a string

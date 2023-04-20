@@ -9,8 +9,9 @@ import javax.swing.JLabel;
  */
 
 /**
- *
- * @author bryce
+ *  main handler class for the GoFish gameplay loop
+ * 
+ * @author bryce/chris/jordan
  */
 public class GoFish extends Game {
     
@@ -47,28 +48,55 @@ public class GoFish extends Game {
         return handSize;
     }
     
+    /**
+     * returns the player count (currently irrelevant)
+     * 
+     * @return 
+     */
     int getPlayerCount(){
         return playerCount;
     }
     
+    /**
+     * returns the current score of the player (how many books they have)
+     * 
+     * @return 
+     */
     int getPlayerBooks(){
         return playerBooks;
     }
     
+    /**
+     * returns the current score of the AI (how many books they have)
+     * 
+     * @return 
+     */
     int getAIBooks(){
         return AIBooks;
     }
     
+    /**
+     * returns the true/false status of if a game is currently running or not
+     * 
+     * @return 
+     */
     boolean isGame(){
         return gamePlaying;
     }
     
+    /**
+     * returns the size of the AI's hand (how many cards the AI has)
+     * 
+     * @return 
+     */
     int getAISize(){
         return AI.getSize();
     }
     
     /**
-     * This function is called on game start and sets up ai and player hands
+     * returns the Hands object of the player. should likely only be called on startup
+     * 
+     * @return
      */
     Hands startMatch(){
         return person;
@@ -290,6 +318,11 @@ public class GoFish extends Game {
         return person;
     }
     
+    /**
+     * returns the value of the "winner" variable (to determine if the player or AI won)
+     * 
+     * @return 
+     */
     int getWinVal(){
         return winner;
     }

@@ -13,8 +13,9 @@ import java.util.*;
  */
 
 /**
- *
- * @author chris
+ * main class handler for War objects
+ * 
+ * @author chris/bryce/jordan
  */
 public class War extends Game{
     
@@ -40,52 +41,58 @@ public class War extends Game{
         ties=new Vector<Integer>();
     }
     
+    /**
+     * returns the first card value in the player's deck
+     * 
+     * @return 
+     */
     int getPlayerCard(){
         return person.getHand().elementAt(0);
     }
     
+    /**
+     * returns the first card value in the AI's deck
+     * 
+     * @return 
+     */
     int getAICard(){
         return AI.getHand().elementAt(0);
     }
     
+    /**
+     * returns the handSize variable
+     * 
+     * @return 
+     */
     int getHandSize(){
         return handSize;
     }
     
+    /**
+     * returns the amount of players (war can only have 2, so this is deprecated)
+     * 
+     * @return 
+     */
     int getPlayerCount(){
         return playerCount;
     }
     
+    /**
+     * returns the true/false status of if a game is currently active
+     * 
+     * @return 
+     */
     boolean getGamePlaying(){
         return gamePlaying;
     }
     
+    /**
+     * runs the main loop and guts of a War game round
+     */
     void Gameplay(){
-        /**
-         * Runs the main loop of War
-         */
-        // create player and AI hands
-       // Hands person=new Hands();
-       // Hands AI=new Hands();
-        // create war card deck
-        //Game war=new Game();
-        //war.Game();
-        //war.Shuffle();
-        // deal deck to player and AI
-        //person.setHand(war.Deal(getHandSize()));
-        //AI.setHand(war.Deal(getHandSize()));
-        // initialization values
-        //Scanner scan = new Scanner(System.in);
         //These values are used to pull NumDefault for players hands to make it make more sense for me
         int personNum=0;
         int AINum=0;
-        // vector that will be used to store ties during the game
-        // "While the player and the AI have cards in their hand, can play"
-       // while (!person.getHand().isEmpty() && !AI.getHand().isEmpty()){
-            // 2-line buffer for player to play their next card
-            //
-            //char play=scan.next().charAt(0); //This is solely so the program doesn't run to completion really fast
-          //  if (play == 'q') break; 
             // grab the player and AI's firstmost card value
             personNum=person.NumDefault();
             AINum=AI.NumDefault();

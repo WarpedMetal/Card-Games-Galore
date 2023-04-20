@@ -8,8 +8,9 @@ import static cggmain.Game.faceCardImage;
 
 
 /**
- *
- * @author jdohe
+ * main handler for War's GUI display
+ * 
+ * @author jdohe/chris/bryce
  */
 public class WarDisplay extends javax.swing.JFrame {
 
@@ -163,6 +164,11 @@ public class WarDisplay extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * on call, runs a single gameplay loop of a War round
+     * 
+     * @param evt 
+     */
     private void PlayerDeckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlayerDeckMouseClicked
         // TODO add your handling code here:
         System.out.println("Player deck clicked.");
@@ -213,6 +219,11 @@ public class WarDisplay extends javax.swing.JFrame {
         
     }//GEN-LAST:event_PlayerFaceCardMouseClicked
 
+    /**
+     * upon quitting from the game (not by hitting the 'x'), close the display and bring back the main menu
+     * 
+     * @param evt 
+     */
     private void BackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackButtonMouseClicked
         // TODO add your handling code here:
         this.dispose();

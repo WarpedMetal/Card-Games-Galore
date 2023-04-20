@@ -8,7 +8,8 @@ package cggmain;
 import java.util.*;
 
 /**
- *
+ * main handler class for the Hands objects
+ * 
  * @author chris
  */
 public class Hands {
@@ -21,6 +22,8 @@ public class Hands {
     
    /**
      * Returns the vector containing all cards (if any) in a hand object
+     * 
+     * @return
      */
     Vector<Integer> getHand(){
         return hand;
@@ -29,7 +32,7 @@ public class Hands {
     /**
      * Sets a preexisting hand(vector) to a hand for use(vector)
      * 
-     * @param newHand 
+     * @param newHand Vector<Int> that will be assigned as the new hand
      */
     void setHand(Vector<Integer> newHand){ 
         hand=newHand;
@@ -38,7 +41,7 @@ public class Hands {
     /**
      * sort the players hand for them
      * 
-     * @param oldHand
+     * @param oldHand the hand object that will be sorted
      * @return 
      */
     Vector<Integer> SortHand(Vector<Integer> oldHand){
@@ -69,7 +72,7 @@ public class Hands {
     /**
      * Adds a card to end of the deck
      * 
-     * @param card 
+     * @param card the value of the card to be added
      */
     void AddCard(int card){ 
         hand.add(card);
@@ -78,7 +81,7 @@ public class Hands {
     /**
      * Will remove a card from deck
      * 
-     * @param card 
+     * @param card the value of the card to be removed
      */
     void RemoveCard(int card){ 
         hand.removeElement(card); //This removes the first occurent of card since no cards duplicate that is ok.

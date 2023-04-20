@@ -8,7 +8,8 @@ package cggmain;
 import java.util.*;
 
 /**
- *
+ *  simple class made to hold AI's hand object (similar to Player.java and is currently not used)
+ * 
  * @author chris
  */
 public class AI extends Hands{
