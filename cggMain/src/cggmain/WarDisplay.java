@@ -170,7 +170,7 @@ public class WarDisplay extends javax.swing.JFrame {
         if (GameOccuring){
             int playerCard=warGame.getPlayerCard();
             int AICard=warGame.getAICard();
-            warGame.Gameplay();
+            warGame.gameplay();
             GameOccuring=warGame.getGamePlaying();
             //System.out.println("/FaceCards/"+playerCard+".png");
             PlayerFaceCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+playerCard+".png")));
