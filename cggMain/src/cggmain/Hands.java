@@ -44,18 +44,18 @@ public class Hands {
      * @param oldHand the hand object that will be sorted
      * @return 
      */
-    Vector<Integer> SortHand(Vector<Integer> oldHand){
+    void SortHand(){
         Vector<Integer> sortedHand= new Vector<Integer>(); //A new vector used to sort the original hand
         int small=55; //integer used to keep track of smallest value in hand
-        while (!oldHand.isEmpty()){ //stops when then hand is empty
-            for (int x=0; x<oldHand.size(); x++){ //runs through whole hand
-                if (small>oldHand.elementAt(x)) small=oldHand.elementAt(x); 
+        while (!hand.isEmpty()){ //stops when then hand is empty
+            for (int x=0; x<hand.size(); x++){ //runs through whole hand
+                if (small>hand.elementAt(x)) small=hand.elementAt(x); 
             }
             sortedHand.add(small); //adds smallest to the next index
-            oldHand.removeElement(small); 
+            hand.removeElement(small); 
             small=55;
         }
-        return sortedHand;
+        hand=sortedHand;
     }
     
     /**

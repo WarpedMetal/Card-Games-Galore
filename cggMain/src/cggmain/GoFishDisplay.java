@@ -378,6 +378,7 @@ public class GoFishDisplay extends javax.swing.JFrame {
                 int aiSize = goFishGame.getAISize();
                 playerHand = goFishGame.Gameplay(cardIndex, 1);
                 removeHand(currSize);
+                playerHand.SortHand();
                 afterGame(currSize, aiSize, pScore, aScore);
             }
         }
