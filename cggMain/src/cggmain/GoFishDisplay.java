@@ -203,11 +203,6 @@ public class GoFishDisplay extends javax.swing.JFrame {
 
         DrawPileDeck.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageResources/Card Games Galore Resources/CardBackResize25.png"))); // NOI18N
         DrawPileDeck.setText("jLabel1");
-        DrawPileDeck.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DrawPileDeckMouseClicked(evt);
-            }
-        });
 
         jScrollPane1.setViewportView(resultBox);
 
@@ -326,11 +321,6 @@ public class GoFishDisplay extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void DrawPileDeckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DrawPileDeckMouseClicked
-        // TODO add your handling code here:
-        System.out.print("Go fish from the draw pile.");
-    }//GEN-LAST:event_DrawPileDeckMouseClicked
 
     /**
      * this function is called when the AI "take turn" button is hit to give the AI its turn

@@ -69,11 +69,6 @@ public class WarDisplay extends javax.swing.JFrame {
 
         PlayerFaceCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/10.png"))); // NOI18N
         PlayerFaceCard.setText("Didn't Work");
-        PlayerFaceCard.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PlayerFaceCardMouseClicked(evt);
-            }
-        });
 
         AIFaceCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageResources/Card Games Galore Resources/CardBackResize25.png"))); // NOI18N
         AIFaceCard.setText("jLabel1");
@@ -171,13 +166,13 @@ public class WarDisplay extends javax.swing.JFrame {
      */
     private void PlayerDeckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlayerDeckMouseClicked
         // TODO add your handling code here:
-        System.out.println("Player deck clicked.");
+        //System.out.println("Player deck clicked.");
         if (GameOccuring){
             int playerCard=warGame.getPlayerCard();
             int AICard=warGame.getAICard();
             warGame.Gameplay();
             GameOccuring=warGame.getGamePlaying();
-            System.out.println("/FaceCards/"+playerCard+".png");
+            //System.out.println("/FaceCards/"+playerCard+".png");
             PlayerFaceCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FaceCards/"+playerCard+".png")));
             PlayerFaceCard.setVisible(true);
             //PlayerFaceCard.setLabelFor(PlayerFaceCard);
@@ -211,13 +206,6 @@ public class WarDisplay extends javax.swing.JFrame {
         // if the user leaves, dispose of the frame containing the war game
         setDefaultCloseOperation(WarDisplay.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_PlayerDeckMouseClicked
-
-    private void PlayerFaceCardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlayerFaceCardMouseClicked
-        // TODO add your handling code here:
-        System.out.println("Player face card clicked");
-  
-        
-    }//GEN-LAST:event_PlayerFaceCardMouseClicked
 
     /**
      * upon quitting from the game (not by hitting the 'x'), close the display and bring back the main menu

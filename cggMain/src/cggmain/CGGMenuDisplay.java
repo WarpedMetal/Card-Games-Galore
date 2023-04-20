@@ -199,7 +199,7 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
         // TODO add your handling code here:
         // listen for user selection from list of games
         String gameSelection = (String) jComboBox2.getSelectedItem();
-        System.out.println("Selection is: " + gameSelection);
+       // System.out.println("Selection is: " + gameSelection);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
@@ -214,7 +214,7 @@ public class CGGMenuDisplay extends javax.swing.JFrame {
             newWarGame.setVisible(true);
             this.setVisible(false);}
         if (jComboBox2.getSelectedItem() == "Go Fish"){
-            System.out.print("Go Fish?");
+           // System.out.print("Go Fish?");
             GoFishDisplay newGoFishGame=new GoFishDisplay();
             newGoFishGame.setVisible(true);
             this.setVisible(false);
